@@ -1,0 +1,272 @@
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta content="text/html charset=UTF-8">
+        <title>15 Puzzle</title>
+        <script>
+            function puzzle(){
+                // randomNum(1,10) will return a random integer from 1 to 10 inclusive
+                const randomNum = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+                // Get all <td> in html page
+                let table = document.getElementsByTagName("td");
+                // Array numbers for the original/solved
+                let numbers = new Array(4);
+                // Array scrambleArray for scrambling the puzzle
+                let scrambleArray = new Array(4);
+                // For loop to populate both arrays from 1- 15
+                for(let i = 0; i < 4; i++){
+                    numbers[i] = new Array(4);
+                    scrambleArray[i] = new Array(4);
+                    numbers[i][0] = scrambleArray[i][0] = i + 1;
+                     for(let j = 1; j < 4; j++){
+                        numbers[i][j] =  numbers[i][j-1] + 4;
+                        scrambleArray[i][j] =  scrambleArray[i][j-1] + 4;
+                    } 
+                }
+                // Populate last element with " "
+                numbers[3][3] = " ";
+                scrambleArray[3][3] = " ";
+
+                // Function displayPuzzle to display the puzzle/grid
+                // @param list for the list to use to display puzzle
+                function displayPuzzle(list){
+                    let j = 0;
+                    for(let i = 0; i < 16; i+=4){
+                        table[i].innerHTML = list[0][j];
+                        table[i+1].innerHTML = list[1][j];
+                        table[i+2].innerHTML = list[2][j];
+                        table[i+3].innerHTML = list[3][j];
+                        j++;
+                  }
+                }
+
+                // Call to display the puzzle using the solved array
+                displayPuzzle(numbers);
+
+                // xcor and ycor for position of blank space
+                let blankxcor = 3;
+                let blankycor = 3;
+
+                //Get the reset button and give it the onclick function
+                resetBTN = document.getElementById("reset");
+                resetBTN.onclick = function (){
+                    // Display original
+                    displayPuzzle(numbers);
+                    // Reset blank cords
+                    blankxcor = 3;
+                    blankycor = 3;
+                    // Copy 2D array --> https://stackoverflow.com/questions/13756482/create-copy-of-multi-dimensional-array-not-reference-javascript
+                    // Reset scrambleArray to solved array (numbers)
+                    scrambleArray = numbers.map(function(arr) {
+                        return arr.slice();
+                    });
+                    // Change grid background back to white if it was yellow
+                    grid.style.background = "white";
+                };
+
+                // Find scramble button
+                // Give it the onclick function
+                scrambleBTN = document.getElementById("scramble");
+                scrambleBTN.onclick = function (){
+                    // Change grid background back to white if it was yellow
+                    grid.style.background = "white";
+                    // A direction for the blank space to move
+                    let direction = randomNum(1,4);
+                    // Holds value for swapping
+                    let tmp = 0;
+                    // Attempt to swap 20 times
+                    for(let i = 0; i < 20; i++){
+                        // Get a random direction --> 1: right; 2: down; 3: left; 4: up
+                        direction = randomNum(1,4);
+                        // Switch statement for each direction
+                        switch(direction){
+                            // All cases are very similar
+                            case(1):
+                                // Check if moving the blank in this direction will go out of the grid
+                                // If it does, try another direction
+                                if(blankycor-1 < 0){
+                                    break;
+                                }else{
+                                    // Swap the blank space and the number, updating position of blank space afterwards
+                                    tmp = scrambleArray[blankxcor][blankycor-1];
+                                    scrambleArray[blankxcor][blankycor-1] = scrambleArray[blankxcor][blankycor];
+                                    scrambleArray[blankxcor][blankycor] = tmp;
+                                    blankycor-=1;
+                                    displayPuzzle(scrambleArray);
+                                }
+                                break;
+                            case(2):
+                                if(blankxcor+1 > 3){
+                                    break;
+                                }else{
+                                    tmp = scrambleArray[blankxcor+1][blankycor];
+                                    scrambleArray[blankxcor+1][blankycor] = scrambleArray[blankxcor][blankycor];
+                                    scrambleArray[blankxcor][blankycor] = tmp;
+                                    blankxcor++;
+                                    displayPuzzle(scrambleArray);
+                                }
+                                break;
+                            case(3):
+                                if(blankycor+1 > 3){
+                                    break;
+                                }else{
+                                    tmp = scrambleArray[blankxcor][blankycor+1];
+                                    scrambleArray[blankxcor][blankycor+1] = scrambleArray[blankxcor][blankycor];
+                                    scrambleArray[blankxcor][blankycor] = tmp;
+                                    blankycor++;
+                                    displayPuzzle(scrambleArray);
+                                }
+                                break;
+                            case(4):
+                                if(blankxcor-1 < 0){
+                                    break;
+                                }else{
+                                    tmp = scrambleArray[blankxcor-1][blankycor];
+                                    scrambleArray[blankxcor-1][blankycor] = scrambleArray[blankxcor][blankycor];
+                                    scrambleArray[blankxcor][blankycor] = tmp;
+                                    blankxcor-=1;
+                                    displayPuzzle(scrambleArray);
+                                }
+                                break;
+                        }
+                  }
+                };
+
+                // Get the entire table/grid
+                let grid = document.getElementById("grid");
+                // Give each <td> element a mouseover, click, and mouseout event
+                for(let i = 0; i < 16; i++){
+                    // On mouse hover, change text to green and make it bold.
+                    table[i].addEventListener("mouseover", function(){table[i].style.color = "green"; table[i].style.fontWeight = "1000"});
+                    // On mouse click, swap number and blank space if possible
+                    table[i].addEventListener("click",  function(){
+                        // convert number in <td> to type number
+                        let number = Number(table[i].innerHTML);
+                        // xcor and ycor for holding location of the number clicked on
+                        let xcor = 0;
+                        let ycor = 0;
+                        // Find where the number is within scrambleArray
+                        for(let i = 0; i < 4; i++){
+                            for(let j = 0; j < 4; j++){
+                                if(scrambleArray[i][j] === number){
+                                    xcor = i;
+                                    ycor = j;
+                                }
+                            }
+                        }
+
+                        // If statements to check if number can be swapped
+                        if(xcor+1 < 4 && scrambleArray[xcor+1][ycor] === " "){
+                                scrambleArray[xcor+1][ycor] = scrambleArray[xcor][ycor];
+                                scrambleArray[xcor][ycor] = " "
+                                displayPuzzle(scrambleArray);
+                        }
+                        if(ycor+1 < 4 && scrambleArray[xcor][ycor+1] === " "){
+                                scrambleArray[xcor][ycor+1] = scrambleArray[xcor][ycor];
+                                scrambleArray[xcor][ycor] = " "
+                                displayPuzzle(scrambleArray);
+                        }
+                        if(xcor-1 >= 0 && scrambleArray[xcor-1][ycor] === " "){
+                                scrambleArray[xcor-1][ycor] = scrambleArray[xcor][ycor];
+                                scrambleArray[xcor][ycor] = " "
+                                displayPuzzle(scrambleArray);
+                        }
+                        if(ycor-1 >= 0 && scrambleArray[xcor][ycor-1] === " "){
+                                scrambleArray[xcor][ycor-1] = scrambleArray[xcor][ycor];
+                                scrambleArray[xcor][ycor] = " "
+                                displayPuzzle(scrambleArray);
+                        }
+                        // If the last number moved completes the puzzle, turn the grid yellow
+                        if(JSON.stringify(scrambleArray)==JSON.stringify(numbers)){
+                            grid.style.background = "yellow";
+                        }
+
+
+                    });
+                    // On mouse out, change the number back to the original
+                    table[i].addEventListener("mouseout", function(){table[i].style.color = "black";  table[i].style.fontWeight = "normal"});
+                }
+            }
+
+        </script>
+        <!--CSS styling for the table-->
+        <style>
+            #reset {
+                width: 100px;
+                position: relative;
+                left: 350px;
+                bottom: 200px;
+            }
+            #scramble {
+                width: 100px;
+                position: relative;
+                left: 246px;
+                bottom: 100px;
+            }
+            table td {
+                width: 30px;
+            }
+            #Header{
+                position: relative;
+                width: 300px;
+                border: 1px;
+                border-style: dashed;
+            }
+
+            #calendar{
+                margin-left: 100px;
+            }
+            #dev{
+                position: absolute;
+                width: 164px;
+                bottom: 0;
+                left: 45%;
+                top: 60%;
+                padding: 0 5px;
+            }
+            
+            
+        </style>
+    </head>
+    <!--call puzzle when window is loaded-->
+    <body onload="puzzle()">
+        <fieldset id="Header">
+            <legend>Check These Out Too! </legend>
+            <legend id="dev"> Developed by Sunny You</legend>
+            <a id="taskman" href="index.html"> Task Manager </a>
+            <a id="calendar" href="/calendar"> Calendar </a>
+            <a id="poetry" href="magneticpoetry.html"> Magnetic Poetry </a>
+        </fieldset>
+        <div class="Container">
+            <table id="grid" border="1" cellpadding="20" style="text-align: center;">
+                <tbody>
+                    <tr></tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    <tr></tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    <tr></tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    <tr></tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                </tbody>
+            </table>
+            <!--Buttons for resetting and scrambling-->
+            <button id="reset">Reset</button>
+            <button id="scramble">Scramble</button>
+        </div>
+    </body>
+</html>

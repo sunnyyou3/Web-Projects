@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Task Manager</title>
+        <!--Load css, jquery, and js files-->
+        <link rel="stylesheet" href="CSS/taskManager.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <!--js files must be loaded after jquery-->
+        <script src="Javascript/taskManager.js"></script>
+        <script src="Javascript/taskObject.js"></script>
+    </head>
+    <body>
+        <fieldset id="Header">
+            <legend>Check These Out Too</legend>
+            <legend id="dev"> Developed by Sunny You</legend>
+                <a id="15puzzle" href="15Puzzle.html"> 15 Puzzle Game </a>
+                <a id="calendar" href="/calendar"> Calendar </a>
+                <a id="poetry" href="magneticpoetry.html"> Magnetic Poetry </a>
+            </fieldset>
+        <div id="buttonContainer">
+        <button id="add">Add</button>
+        <button id="delete">Delete</button>
+        </div>
+        <div id="formContainer">
+            <form id="form">
+                <label>Description: </label>
+                <input type="text" id="description"><br>
+                <label>Date: </label>
+                <input type="date" id="date"><br>
+                <label>Type: </label>
+                <select id="options">
+                    <option>Next Action</option>
+                    <option>Waiting</option>
+                    <option>Talk</option>
+                    <option>Future</option>
+                    <option>Someday/Maybe</option>
+                </select>
+                <div id="personInput">
+                    <label>Person: </label>
+                    <input type="text" id="person"><br>
+                </div>
+                <div id="waitingInput">
+                    <label>Waiting for: </label>
+                    <input type="text" id="waiting"><br>
+                </div>
+            </form>
+        </div>
+        <table>
+            <th class="check"></th>
+            <th>Task</th>
+            <th>Type</th>
+            <th>Due Date</th>
+        </table>
+    </body>
+</html>

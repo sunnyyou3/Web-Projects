@@ -1,0 +1,48 @@
+
+ body {
+    background-color: gray;
+ }
+
+ .words{
+    position: absolute;
+    left: 10px;
+    top: 100px;
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    font-size: larger;
+    width:fit-content;
+    height: fit-content;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+ }
+
+ #trash{
+    position: absolute;
+    padding-left: 30px;
+    height: 50px;
+ }
+
+
+ 
+#Header{
+   position: relative;
+   width: 300px;
+   border: 1px;
+   border-style: dashed;
+}
+
+#calendar{
+   margin-left: 100px;
+}
+
+#dev{
+   position: absolute;
+   width: 164px;
+   bottom: 0;
+   left: 45%;
+   top: 60%;
+   padding: 0 5px;
+}

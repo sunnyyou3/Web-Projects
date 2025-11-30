@@ -1,0 +1,69 @@
+
+
+table, th, tr ,td {
+    width: 100px;
+    border: 1px solid;
+}
+
+table{
+    table-layout:fixed;
+}
+
+th {
+    width: 200px;
+    background-color: #4DE1FF;
+    font-size: 30px;
+    text-align: center;
+}
+
+td {
+    word-wrap:break-word;
+    width: 200px;
+    text-align: left;
+    padding-left: 10px;
+}
+
+#buttonContainer {
+    position: relative;
+    left: 740px;
+    top: 50px;
+    margin-bottom: -10px;
+}
+.check{
+    width: 50px;
+}
+#add{
+    margin-right: 30px;
+}
+
+#formContainer{
+    position: relative;
+    left: 740px;
+    top: 70px;
+    margin-bottom: -70px;
+}
+
+#personInput, #waitingInput{
+    position: relative;
+    margin-bottom: -91px;
+}
+
+#Header{
+    position: relative;
+    width: 300px;
+    border: 1px;
+    border-style: dashed;
+}
+
+#calendar{
+    margin-left: 100px;
+}
+
+#dev{
+    position: absolute;
+    width: 164px;
+    bottom: 0;
+    left: 45%;
+    top: 60%;
+    padding: 0 5px;
+}

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Calendar</title>
+        <style>
+            table, tr, td{
+                width: 100px;
+                border: 1px solid;
+            }
+            td{
+                padding: 50px;
+                background-color: #4DE1FF;
+                font-size: 50px;
+            }
+            #monyear{
+                text-align: center;
+                font-size: 50px;
+                padding: 0%;
+                background-color: #006A80;
+            }
+            .arrows{
+                text-align: center;
+                background-color: #00D3FF;
+                font-size: 30px;
+            }
+            a{
+                text-decoration: none;
+            }
+            #Header{
+                position: relative;
+                width: 300px;
+                border: 1px;
+                border-style: dashed;
+            }
+
+            #taskman{
+                margin-left: 100px;
+            }
+            
+            #dev{
+                position: absolute;
+                width: 164px;
+                bottom: 0;
+                left: 45%;
+                top: 60%;
+                padding: 0 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <fieldset id="Header">
+            <legend>Check These Out Too</legend>
+            <legend id="dev"> Developed by Sunny You</legend>
+            <a id="15puzzle" href="15Puzzle.html"> 15 Puzzle Game </a>
+            <a id="taskman" href="index.html"> Task Manager </a>
+            <a id="poetry" href="magneticpoetry.html"> Magnetic Poetry </a>
+        </fieldset>
+        <table>
+            <tr>
+                <td class="arrows"><%- backYear %> </td>
+                <td class="arrows"><%- backMonth %></td>
+                <td id="monyear" colspan="3"> <%= month %> <%= year %></td>
+                <td class="arrows"><%- forwardMonth %></td>
+                <td class="arrows"><%- forwardYear %></td>
+            </tr>
+            <tr>
+                <td>SU</td>
+                <td>MO</td>
+                <td>TU</td>
+                <td>WE</td>
+                <td>TH</td>
+                <td>FR</td>
+                <td>SA</td>
+            </tr>
+            <div><%- displayDays %></div>
+        </table>
+    </body>
+</html>
